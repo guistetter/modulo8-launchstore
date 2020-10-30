@@ -1,0 +1,142 @@
+1-Iniciar banco de dados no docker 
+  sudo docker start database -> é o container do postgres
+  a database do projeto é: launchstoreDB
+2- Iniciar projeto
+  npm run nodemon
+
+
+classe
+class UserController{
+  constructor(name, address){
+    this.name = name 
+    this.address = address
+  }
+
+  getNameAddress(){
+   return this.name + this.address
+  }
+}
+
+const user1 = new UserController("myk", "Rua x")
+console.log(user1.getNameAddress())
+const user2 = new UserController("e ae", "Rua y")
+console.log(user2.getNameAddress())
+console.log(user2.address, '---')
+
+
+
+outro exemplo classe 
+class Person{
+  getName(){
+    return this.name
+  }
+}
+
+class Dev extends Person{
+  constructor(name){
+    super()
+    this.name = name
+  }
+  // getName(){
+  //   return this.name
+  // }
+}
+
+const dev = new Dev('gui')
+console.log(dev.name)
+
+Mais exemplos de classes
+class Person{
+  constructor(name){
+    this.name = name
+  }
+  getName(){
+    return this.name
+  }
+}
+
+class Dev extends Person{
+}
+
+const dev = new Dev('gui')
+console.log(dev.getName())
+///////////---------------------
+class Dev2 extends Person{
+ getName(){
+   return this.name
+ }
+}
+const dev2 = new Dev2('Laura')
+console.log(dev2.getName())
+
+///////////---------------------
+
+class Dev3 extends Person{
+  constructor(name){
+    super()
+    this.name = name
+  }
+  getName(){
+    return this.name
+  }
+ }
+ const dev3 = new Dev3('marta')
+ console.log(dev3.getName())
+
+bcrypt para fazer o hash da senha
+
+
+#Sessao usuario
+
+Vamos utilizar o express-session
+Até o momento só sabemos se usuario existe.. 
+
+Se esta logado e tal vai saber..
+vamos apllicar o express-session middleware para session
+
+Precisamos modulo do express-ssion para guardar a sesion no postgres 
+ver na documentacao:
+express-session connect-pg-simple
+
+
+Estrategia para resgatar senha
+1- criar um token para usuario 
+2- criar expiracao do token 
+3- enviar email com um link de recuperacao de senha
+4- avisar usuario que enviamos email
+
+Para criar o token vamos usar o crypto modulo do proprio node, vamos faze-lo
+em SessionController.js
+Pronto criamos o token e expires, atualizamos o model User 
+
+Agora precisamos enviar um email para o usuario 
+Vamos usar o nodemail para fazer o email, e usaremos o mailtrap 
+como serviço para testar o envio de email
+conta: compras.stetter.ti@hotmail.com
+cb32ffd6f
+
+Logica para recuperar a senha
+//procurar o usuário
+//ver se a senha bate
+//verificar se o token bate
+//veririfcar se o token não expirou
+//criar um novo hash de senha 
+//atualiza o usuário
+//avisa o usuário que ele tem uma nova senha
+
+Boa parte disso é verificação então vamos usar o session.js em validators
+
+Excluir o usuario do sistema.
+
+Quando remover o usuario temos que remover os produtos do arrombando, precisamos 
+remover os arquivos tambem.
+
+Então a remoção ocorre em 2 etapas no bando de dados e no aplicativo.
+
+No banco vamos remover em cascata.
+
+No model 
+
+pegar todos os produtos
+dos produtos pegar as imagens 
+remover as iamgens da pasta public
